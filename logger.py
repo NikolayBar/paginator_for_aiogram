@@ -1,13 +1,31 @@
 # logger.py
+# import logging
+# import sys
+#
+# logging.basicConfig(
+#     level=logging.INFO,
+#     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+#     handlers=[
+#         logging.StreamHandler(sys.stdout)
+#     ]
+# )
+#
+# logger = logging.getLogger(__name__)
 import logging
-import sys
+from pathlib import Path
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
-)
 
-logger = logging.getLogger(__name__)
+def setup_logger():
+    logs_dir = Path("logs")
+    logs_dir.mkdir(exist_ok=True)
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.FileHandler("logs/bot.log"),
+            logging.StreamHandler()
+        ]
+    )
+
+    return logging.getLogger(__name__)
